@@ -34,12 +34,12 @@ class Bip39SeedGenerator
      * @return \BitWasp\Buffertools\BufferInterface
      * @throws \Exception
      */
-    public function getSeed(string $mnemonic, string $passphrase = ''): BufferInterface
+    public function getSeed(string $mnemonic, string $passphrase = '', $passphrase_salt = 'mnemonic'): BufferInterface
     {
         return Hash::pbkdf2(
             'sha512',
             $this->normalize($mnemonic),
-            $this->normalize("mnemonic{$passphrase}"),
+            $this->normalize($passphrase_salt.$passphrase),
             2048,
             64
         );
